@@ -2,6 +2,7 @@
 using Contactlist.Contacts.RepoSitories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -25,7 +26,7 @@ namespace Contactlist.Contacts.Controllers
         #region Cruds
         [HttpGet]
         [ProducesResponseType(typeof(Contact),(int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumareble<Contact>>> GetContacts()
+        public async Task<ActionResult<IEnumerable<Contact>>> GetContacts()
         {
             var contacts = await _contactRepository.GetContacts();
             return Ok(contacts);
