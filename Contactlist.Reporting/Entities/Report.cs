@@ -17,7 +17,7 @@ namespace Contactlist.Reporting.Entities
         public string RaporDurumText { get; set; }
 
     }
-    public enum RapoDurum
+    public enum RaporDurum
     {
         Hazirlaniyor=1,
         Tamamlandi=2
