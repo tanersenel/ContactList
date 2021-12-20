@@ -32,7 +32,7 @@ namespace Contactlist.Contacts.Controllers
             return Ok(contacts);
 
         }
-        [HttpGet("{id:lenght(24)}",Name ="GetContact")]
+        [HttpGet("{id:length(24)}",Name ="GetContact")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Contact), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Contact>> GetContact(string id)
@@ -61,7 +61,7 @@ namespace Contactlist.Contacts.Controllers
             return Ok(await _contactRepository.Update(contact));
             
         }
-        [HttpGet("{id:lenght(24)}", Name = "GetContact")]
+        [HttpDelete("{id:length(24)}", Name = "DeleteCOntact")]
         [ProducesResponseType(typeof(Contact), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> DeleteContact(string id)
         {

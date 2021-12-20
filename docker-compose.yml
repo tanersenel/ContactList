@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  contactlist.contacts:
+    image: ${DOCKER_REGISTRY-}contactlistcontacts
+    build:
+      context: .
+      dockerfile: Contactlist.Contacts/Dockerfile
