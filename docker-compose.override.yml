@@ -13,11 +13,23 @@ services:
     container_name: contactlistcontacts
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ContactDatabaseSettings:ConnectionStrings=mongodb://contactlistdb:27017"
+      - "ContactDatabaseSettings:ConnectionString=mongodb://contactlistdb:27017"
     depends_on:
         - contactlistdb
     ports:
       - "8000:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  contactlist.reporting:
+    container_name: contactlistreporting
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ReportDatabaseSettings:ConnectionString=mongodb://contactlistdb:27017"
+    depends_on:
+      - contactlistdb
+    ports:
+      - "8001:80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

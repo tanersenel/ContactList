@@ -1,18 +1,14 @@
 using Contactlist.Reporting.Data;
+using Contactlist.Reporting.Repostories;
+using Contactlist.Reporting.Repostories.Interfaces;
 using Contactlist.Reporting.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Contactlist.Reporting
 {
@@ -31,7 +27,7 @@ namespace Contactlist.Reporting
             services.Configure<ReportDatabaseSettings>(Configuration.GetSection(nameof(ReportDatabaseSettings)));
             services.AddSingleton<IReportDatabaseSettings>(sp => sp.GetRequiredService<IOptions<ReportDatabaseSettings>>().Value);
             services.AddTransient<IReportContext, ReportContext>();
-            //services.AddTransient<IContactRepository, ContactRepository>();
+            services.AddTransient<IReportRepository, ReportRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
