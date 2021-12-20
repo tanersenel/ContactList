@@ -1,6 +1,8 @@
 version: '3.4'
 
 services:
+  contactlistdb:
+    image: mongodb
   contactlist.contacts:
     image: ${DOCKER_REGISTRY-}contactlistcontacts
     build:
