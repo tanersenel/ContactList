@@ -62,7 +62,7 @@ namespace EventBusRabbitMQ.Producer
                     channel.BasicAcks += (sender, eventArgs) =>
                     {
                         Console.WriteLine("Sent RabbitMQ");
-                        //implement ack handle
+                      
                     };
                 });
             }

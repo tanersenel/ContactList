@@ -9,6 +9,12 @@ services:
     #- ./data:/data/db
    ports:
     - "27017:27017"
+  rabbitmq:
+   container_name: rabbitmq
+   restart: always
+   ports:
+     - "5672:5672"
+     - "15672:15672"
   contactlist.contacts:
     container_name: contactlistcontacts
     environment:
@@ -26,8 +32,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ReportDatabaseSettings:ConnectionString=mongodb://contactlistdb:27017"
+      - "EventBus:HostName=rabbitmq"
     depends_on:
       - contactlistdb
+      - rabbitmq
     ports:
       - "8001:80"
     volumes:
