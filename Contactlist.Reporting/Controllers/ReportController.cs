@@ -1,7 +1,12 @@
-﻿using Contactlist.Reporting.Entities;
+﻿using AutoMapper;
+using Contactlist.Reporting.Entities;
 using Contactlist.Reporting.Repostories.Interfaces;
+using EventBusRabbitMQ.Core;
+using EventBusRabbitMQ.Events;
+using EventBusRabbitMQ.Producer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -14,11 +19,15 @@ namespace Contactlist.Sourcing.Controllers
     {
         private readonly IReportRepository _reportRepository;
         private readonly ILogger<ReportController> _logger;
+        private readonly EventBusRabbitMQProducer _eventBus;
+        private readonly IMapper _mapper;
 
-        public ReportController(IReportRepository reportRepository, ILogger<ReportController> logger)
+        public ReportController(IReportRepository reportRepository, IMapper mapper, EventBusRabbitMQProducer eventBus, ILogger<ReportController> logger)
         {
             _reportRepository = reportRepository;
             _logger = logger;
+            _eventBus = eventBus;
+            _mapper = mapper;
         }
         [HttpGet]
         [ProducesResponseType(typeof(Report), (int)HttpStatusCode.OK)]
@@ -54,6 +63,61 @@ namespace Contactlist.Sourcing.Controllers
         {
             return Ok(await _reportRepository.Delete(id));
         }
+        [HttpPost("CompleteReport")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        public async Task<ActionResult> CompleteAuction([FromBody] string id)
+        {
+            Report report = await _reportRepository.GetReport(id);
+            if (report == null)
+                return NotFound();
+
+            if (report.RaporDurum != (int)RaporDurum.Tamamlandi)
+            {
+                _logger.LogError("Report can not be completed");
+                return BadRequest();
+            }
+
+        
+
+            ReportCreateEvents eventMessage = _mapper.Map<ReportCreateEvents>(report);
+
+            try
+            {
+                _eventBus.Publish(EventBusConstants.ReportCreateQueue, eventMessage);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR Publishing integration event: {EventId} from {AppName}", eventMessage.UUID, "Sourcing");
+                throw;
+            }
+
+            return Accepted();
+        }
+        [HttpPost("TestEvent")]
+        public ActionResult<ReportCreateEvents> TestEvent()
+        {
+            ReportCreateEvents eventMessage = new ReportCreateEvents();
+            eventMessage.RaporDurum = (int)RaporDurum.Tamamlandi;
+            eventMessage.UUID   = Guid.NewGuid().ToString();
+            eventMessage.RaporDurumText = "Tamamlandi";
+            eventMessage.RaporTarihi = DateTime.Now;
+            
+            
+            try
+            {
+                _eventBus.Publish(EventBusConstants.ReportCreateQueue, eventMessage);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR Publishing integration event: {EventId} from {AppName}", eventMessage.UUID, "Sourcing");
+                throw;
+            }
+
+            return Accepted(eventMessage);
+        }
+
     }
-       
+
 }

@@ -7,6 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["Contactlist.Reporting/Contactlist.Reporting.csproj", "Contactlist.Reporting/"]
+COPY ["EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBusRabbitMQ/"]
 RUN dotnet restore "Contactlist.Reporting/Contactlist.Reporting.csproj"
 COPY . .
 WORKDIR "/src/Contactlist.Reporting"
