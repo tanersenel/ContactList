@@ -53,7 +53,6 @@ namespace Contactlist.Contacts
                 
             }
 
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

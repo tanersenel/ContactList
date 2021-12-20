@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manage", "Manage", "{134406
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sourcing", "Sourcing", "{38B9960E-3C55-4E30-990A-776BCE40B873}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,18 +45,18 @@ Global
 		{20D49927-7FEC-44C0-B371-FD43F5077A47}.Release|x64.Build.0 = Release|Any CPU
 		{20D49927-7FEC-44C0-B371-FD43F5077A47}.Release|x86.ActiveCfg = Release|Any CPU
 		{20D49927-7FEC-44C0-B371-FD43F5077A47}.Release|x86.Build.0 = Release|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Debug|x64.Build.0 = Debug|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Debug|x86.Build.0 = Debug|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Release|x64.ActiveCfg = Release|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Release|x64.Build.0 = Release|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Release|x86.ActiveCfg = Release|Any CPU
-		{D77CF8A6-DA65-4AF7-8A5D-B21836FA67AC}.Release|x86.Build.0 = Release|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Debug|x64.Build.0 = Debug|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Debug|x86.Build.0 = Debug|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Release|x64.ActiveCfg = Release|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Release|x64.Build.0 = Release|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Release|x86.ActiveCfg = Release|Any CPU
+		{8D0EA3F6-27FC-4A98-8858-18C8B63E2207}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

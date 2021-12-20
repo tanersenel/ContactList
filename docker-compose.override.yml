@@ -1,25 +1,23 @@
 version: '3.4'
 
 services:
-  conttactlistdb: 
-    container_name: contactlistdb
-    restart: always
-    volumes: 
-        - ${WEBAPP_STORAGE_HOME}/site:/data/db
-        # - ./data:/data/db
-    ports: 
-        - "27017:27017"
+  contactlistdb:
+   container_name: contactlistdb
+   restart: always
+   volumes:
+    - ${WEBAPP_STORAGE_HOME}/site:/data/db
+    #- ./data:/data/db
+   ports:
+    - "27017:27017"
   contactlist.contacts:
-    container_name: contactlistcontact
+    container_name: contactlistcontacts
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - "ContactlistDatabaseSettings:ConnectionStrings=mongodb://localhost:27017"
-    depends_on: 
-      - contactlistdb
+      - "ContactDatabaseSettings:ConnectionStrings=mongodb://contactlistdb:27017"
+    depends_on:
+        - contactlistdb
     ports:
       - "8000:80"
-      - "443"
     volumes:
-      - ${HOME}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${HOME}/ASP.NET/Https:/root/.aspnet/https/
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

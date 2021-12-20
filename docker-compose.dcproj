@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>d77cf8a6-da65-4af7-8a5d-b21836fa67ac</ProjectGuid>
+    <ProjectGuid>8d0ea3f6-27fc-4a98-8858-18c8b63e2207</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>contactlist.contacts</DockerServiceName>

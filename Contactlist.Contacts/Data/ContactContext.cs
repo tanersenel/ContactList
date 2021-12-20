@@ -9,7 +9,7 @@ namespace Contactlist.Contacts.Data
     {
         public ContactContext(IContactDatabaseSettings settings  )
         {
-            var client = new MongoClient(settings.ConnectionStrings);
+            var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
             Contacts = database.GetCollection<Contact>(settings.CollectionName);
