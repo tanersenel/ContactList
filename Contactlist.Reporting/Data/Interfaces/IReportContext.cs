@@ -6,6 +6,5 @@ namespace Contactlist.Reporting.Data
     public interface IReportContext
     {
         IMongoCollection<Report> Reports { get; }
-        IMongoCollection<ReportResponse> ReportResponses { get; }
     }
 }

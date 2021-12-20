@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace EventBusRabbitMQ
 {
-    class DefaultRabbitMQPersistantConnection : IRabbitMQPersistantConnection
+    public class DefaultRabbitMQPersistantConnection : IRabbitMQPersistantConnection
     {
         private readonly IConnectionFactory _connectionFactory;
         private IConnection _connection;
@@ -101,7 +101,7 @@ namespace EventBusRabbitMQ
 
         public IModel CreateModel()
         {
-            if (!IsConnected)
+            if (!isConnected)
             {
                 throw new InvalidOperationException("No RabbitMQ connections are available to perform this action");
             }

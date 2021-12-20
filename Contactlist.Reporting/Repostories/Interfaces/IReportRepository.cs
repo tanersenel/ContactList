@@ -11,7 +11,9 @@ namespace Contactlist.Reporting.Repostories.Interfaces
         Task Create(Report report);
 
         Task<bool> Delete(string id);
+        Task<bool> Update(Report report);
         Task Run(Report report);
-        Task<bool> Finish(Report report);
+
+        
     }
 }

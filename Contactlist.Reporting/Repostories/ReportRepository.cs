@@ -17,6 +17,7 @@ namespace Contactlist.Reporting.Repostories
         public async Task Create(Report report)
         {
             await _context.Reports.InsertOneAsync(report);
+            await Run(report);
         }
 
         public async Task<bool> Delete(string id)
@@ -24,14 +25,6 @@ namespace Contactlist.Reporting.Repostories
             var filter = Builders<Report>.Filter.Eq(c => c.UUID, id);
             DeleteResult deleteResult = await _context.Reports.DeleteOneAsync(filter);
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
-        }
-
-        public async Task<bool> Finish(Report report)
-        {
-            report.RaporDurum = (int)RaporDurum.Tamamlandi;
-            report.RaporDurumText = "Tamamlandı";
-            var updateResult = await _context.Reports.ReplaceOneAsync(filter: c => c.UUID == report.UUID, replacement: report);
-            return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
 
         public async Task<IEnumerable<Report>> GetReports()
@@ -44,9 +37,17 @@ namespace Contactlist.Reporting.Repostories
             return await _context.Reports.Find(c => c.UUID == id).FirstOrDefaultAsync();
         }
 
-        public Task Run(Report report)
+        public async Task Run(Report report)
         {
-            throw new System.NotImplementedException();
+            report.RaporDurum = (int)RaporDurum.Tamamlandi;
+            report.RaporDurumText = "Tamamlandı";
+            await Update(report);
+        }
+
+        public async Task<bool> Update(Report report)
+        {
+            var updateResult = await _context.Reports.ReplaceOneAsync(filter: c => c.UUID == report.UUID, replacement: report);
+            return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
     }
 }
