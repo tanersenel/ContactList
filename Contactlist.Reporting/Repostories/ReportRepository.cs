@@ -43,6 +43,7 @@ namespace Contactlist.Reporting.Repostories
 
         public async Task Run(Report report)
         {
+
             report.RaporDurum = (int)RaporDurum.Tamamlandi;
             report.RaporDurumText = "Tamamlandı";
             await Update(report);
