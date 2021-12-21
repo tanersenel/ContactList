@@ -6,12 +6,14 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using System.Linq;
 
 namespace Contactlist.Reporting.Repostories
 {
     public class ReportRepository : IReportRepository
     {
         private readonly IReportContext _context;
+        
         private readonly IHubContext<ReportHub> _hub;
         public ReportRepository(IReportContext context, IHubContext<ReportHub> hub)
         {
@@ -21,6 +23,7 @@ namespace Contactlist.Reporting.Repostories
         public async Task Create(Report report)
         {
             await _context.Reports.InsertOneAsync(report);
+            await _hub.Clients.All.SendAsync("Report", report);
             await Run(report);
         }
 
@@ -43,6 +46,27 @@ namespace Contactlist.Reporting.Repostories
 
         public async Task Run(Report report)
         {
+            var cont = _context.Contacts.AsQueryable().ToList();
+           
+           
+            IEnumerable<IGrouping<string, Contact>> groups = cont
+            .SelectMany(doc => doc.IletisimBilgileri, (doc, meta) => new { doc, meta })
+            .Where(pair => pair.meta.BilgiTipi == 2)
+            .GroupBy(pair => pair.meta.BilgiIcerigi, pair => pair.doc);
+            
+
+            report.RaporSonuc = new List<ReportResponse>();
+            foreach (var item in groups)
+            {
+               
+                report.RaporSonuc.Add(new ReportResponse() { 
+                    KisiSayisi=item.Count(),
+                    Konum = item.Key,
+                    ReportUUID = report.UUID,
+                    TelefonNoSayisi = item.ToList().Where(x => x.IletisimBilgileri.Where(y => y.BilgiTipi == 1).Any()).Count()
+                   
+                });
+            }
 
             report.RaporDurum = (int)RaporDurum.Tamamlandi;
             report.RaporDurumText = "Tamamlandı";

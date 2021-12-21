@@ -13,6 +13,7 @@ namespace Contactlist.Reporting.Mapping
         public ReportingMapper()
         {
             CreateMap<ReportCreateEvents, Report>().ReverseMap();
+            CreateMap<ReportResponseModel , ReportResponse>().ReverseMap();
         }
     }
 }
