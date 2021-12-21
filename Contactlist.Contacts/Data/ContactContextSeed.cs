@@ -33,6 +33,11 @@ namespace Contactlist.Contacts.Data
                        {
                            BilgiTipi=(int)BilgiTipleri.Telefon,
                            BilgiIcerigi="5442277514"
+                       },
+                       new ContactDetail
+                       {
+                           BilgiTipi=(int)BilgiTipleri.Konum,
+                           BilgiIcerigi="38.801257,30.5411654"
                        }
                    }
                }

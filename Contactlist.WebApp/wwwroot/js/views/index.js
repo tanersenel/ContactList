@@ -27,16 +27,41 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
 
 function addReportToTable(report) {
-    var str = "<tr>";
-    str += "<td>" + report.uuid + "</td>";
-    str += "<td>" + report.raporDurumText + "</td>";
-    str += "</tr>";
+    if (report.raporSonuc == null) {
+        var str = "<tr>";
+        str += "<td>" + report.uuid + "</td>";
+        str += "<td></td>";
+        str += "<td>" + report.raporDurumText + "</td>";
+        str += "<td></td>";
+        str += "<td></td>";
 
-    if ($('table > tbody> tr:first').length > 0) {
-        $('table > tbody> tr:first').before(str);
-    } else {
-        $('.bidLine').append(str);
+        str += "</tr>";
+
+        if ($('table > tbody> tr:first').length > 0) {
+            $('table > tbody> tr:first').before(str);
+        } else {
+            $('.bidLine').append(str);
+        }
     }
+    else {
+        report.raporSonuc.forEach(element => {
+            var str = "<tr>";
+            str += "<td>" + element.reportUUID + "</td>";
+            str += "<td>" + element.konum + "</td>";
+            str += "<td>" + report.raporDurumText + "</td>";
+            str += "<td>" + element.kisiSayisi + "</td>";
+            str += "<td>" + element.telefonNoSayisi + "</td>";
+            str += "</tr>";
+
+            if ($('table > tbody> tr:first').length > 0) {
+                $('table > tbody> tr:first').before(str);
+            } else {
+                $('.bidLine').append(str);
+            }
+        });
+      
+    }
+   
 
 }
 

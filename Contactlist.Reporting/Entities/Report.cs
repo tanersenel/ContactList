@@ -15,7 +15,7 @@ namespace Contactlist.Reporting.Entities
         public DateTime RaporTarihi { get; set; }
         public int RaporDurum { get; set; }
         public string RaporDurumText { get; set; }
-        public ReportResponse RaporSonuc { get; set; }
+        public List<ReportResponse> RaporSonuc { get; set; }
 
     }
     public enum RaporDurum

@@ -12,9 +12,12 @@ namespace Contactlist.Reporting.Data
             var database = client.GetDatabase(settings.DatabaseName);
 
             Reports = database.GetCollection<Report>(nameof(Report));
+            Contacts = database.GetCollection<Contact>(nameof(Contact));
             
+
         }
         public IMongoCollection<Report> Reports { get; }
+        public IMongoCollection<Contact> Contacts { get; }
 
     }
 }
