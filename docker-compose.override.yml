@@ -41,3 +41,22 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  contactlist.apigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+  esourcing.apigateway:
+   container_name: esourcingapigateway
+   environment:
+    - ASPNETCORE_ENVIRONMENT=Development
+   depends_on:
+    - contactlist.contacts
+    - contactlist.reporting
+   ports:
+    - "5000:80"
+   volumes:
+    - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
+    - ${HOME}/.aspnet/https:/root/.aspnet/https/
+

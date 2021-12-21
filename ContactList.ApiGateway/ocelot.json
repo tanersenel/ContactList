@@ -27,7 +27,7 @@
     },
     //Reporting API
     {
-      "DownstreamPathTemplate": "/api/v1/Auction",
+      "DownstreamPathTemplate": "/api/v1/Report",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

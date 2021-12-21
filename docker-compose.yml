@@ -17,3 +17,10 @@ services:
       context: .
       dockerfile: Contactlist.Reporting/Dockerfile
 
+
+  contactlist.apigateway:
+    image: ${DOCKER_REGISTRY-}contactlistapigateway
+    build:
+      context: .
+      dockerfile: ContactList.ApiGateway/Dockerfile
+
