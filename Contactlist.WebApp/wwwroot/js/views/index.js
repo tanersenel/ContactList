@@ -1,5 +1,5 @@
 ﻿
-var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:58748/reporthub").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:8001/reporthub").build();
 
 
 connection.start().then(function () {
