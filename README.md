@@ -1,4 +1,4 @@
-# Mikroservice mimarisi ile Telefon Rehberi Uygulaması
+# Mikroservice ile Telefon Rehberi Uygulaması
 
 Proje Çoklu Mikroservice mimarısi ile telefon rehberi oluşturulmasını ve raporlanmasını sağlamaktadır. 
 Proje tüm katmanları dockerize edilmiş ve docker-compose dosyaları eklenmiştir. 
