@@ -54,6 +54,24 @@ namespace Contactlist.Sourcing.Controllers
         public async Task<ActionResult<Report>> CreateReport([FromBody] Report report)
         {
             await _reportRepository.Create(report);
+            if (report.RaporDurum != (int)RaporDurum.Tamamlandi)
+            {
+                _logger.LogError("Report can not be completed");
+               
+            }
+
+            ReportCreateEvents eventMessage = _mapper.Map<ReportCreateEvents>(report);
+
+            try
+            {
+                _eventBus.Publish(EventBusConstants.ReportCreateQueue, eventMessage);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR Publishing integration event: {EventId} from {AppName}", eventMessage.UUID, "Sourcing");
+
+            }
+
             return CreatedAtRoute("GetReport", new { id = report.UUID }, report);
 
         }
@@ -67,7 +85,7 @@ namespace Contactlist.Sourcing.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
-        public async Task<ActionResult> CompleteAuction([FromBody] string id)
+        public async Task<ActionResult> CompleteReport([FromBody] string id)
         {
             Report report = await _reportRepository.GetReport(id);
             if (report == null)
@@ -78,8 +96,6 @@ namespace Contactlist.Sourcing.Controllers
                 _logger.LogError("Report can not be completed");
                 return BadRequest();
             }
-
-        
 
             ReportCreateEvents eventMessage = _mapper.Map<ReportCreateEvents>(report);
 

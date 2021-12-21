@@ -1,18 +1,22 @@
 ﻿using Contactlist.Reporting.Data;
 using Contactlist.Reporting.Entities;
+using Contactlist.Reporting.Hubs;
 using Contactlist.Reporting.Repostories.Interfaces;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Contactlist.Reporting.Repostories
 {
     public class ReportRepository : IReportRepository
     {
         private readonly IReportContext _context;
-        public ReportRepository(IReportContext context)
+        private readonly IHubContext<ReportHub> _hub;
+        public ReportRepository(IReportContext context, IHubContext<ReportHub> hub)
         {
             _context = context;
+            _hub = hub;
         }
         public async Task Create(Report report)
         {
@@ -42,12 +46,14 @@ namespace Contactlist.Reporting.Repostories
             report.RaporDurum = (int)RaporDurum.Tamamlandi;
             report.RaporDurumText = "Tamamlandı";
             await Update(report);
+            await _hub.Clients.All.SendAsync("Report", report);
         }
 
         public async Task<bool> Update(Report report)
         {
             var updateResult = await _context.Reports.ReplaceOneAsync(filter: c => c.UUID == report.UUID, replacement: report);
             return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
+            
         }
     }
 }

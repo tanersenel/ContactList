@@ -17,3 +17,17 @@ services:
       context: .
       dockerfile: Contactlist.Reporting/Dockerfile
 
+
+  contactlist.apigateway:
+    image: ${DOCKER_REGISTRY-}contactlistapigateway
+    build:
+      context: .
+      dockerfile: ContactList.ApiGateway/Dockerfile
+
+
+  contactlist.webapp:
+    image: ${DOCKER_REGISTRY-}contactlistwebapp
+    build:
+      context: .
+      dockerfile: Contactlist.WebApp/Dockerfile
+

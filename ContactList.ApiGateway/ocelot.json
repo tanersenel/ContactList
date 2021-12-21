@@ -1,0 +1,66 @@
+{
+  "Routes": [
+    //Contact API
+    {
+      "DownstreamPathTemplate": "/api/v1/Contact",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "contactlistcontacts",
+          "Port": "80"
+        }
+      ],
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "UpstreamPathTemplate": "/Contact"
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Contact/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "contactlistcontacts",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Contact/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    //Reporting API
+    {
+      "DownstreamPathTemplate": "/api/v1/Report",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "esourcingsourcing",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Report",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Report/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "contactlistreporting",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Report/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Report/CompleteReport/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "contactlistreporting",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Report/CompleteReport/{id}",
+      "UpstreamHttpMethod": [ "POST" ]
+    }
+  ]
+}

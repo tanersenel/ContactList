@@ -1,22 +1,16 @@
-using Contactlist.Reporting.Data;
-using Contactlist.Reporting.Repostories;
-using Contactlist.Reporting.Repostories.Interfaces;
-using Contactlist.Reporting.Settings;
+using Contactlist.WebApp.Consumers;
+using Contactlist.WebApp.Extensions;
+
 using EventBusRabbitMQ;
-using EventBusRabbitMQ.Producer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
-using AutoMapper;
-using Contactlist.Reporting.Hubs;
 
-namespace Contactlist.Reporting
+namespace Contactlist.WebApp
 {
     public class Startup
     {
@@ -30,16 +24,7 @@ namespace Contactlist.Reporting
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<ReportDatabaseSettings>(Configuration.GetSection(nameof(ReportDatabaseSettings)));
-            services.AddSingleton<IReportDatabaseSettings>(sp => sp.GetRequiredService<IOptions<ReportDatabaseSettings>>().Value);
-            services.AddTransient<IReportContext, ReportContext>();
-            services.AddTransient<IReportRepository, ReportRepository>();
-
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contactlist.Reporting", Version = "v1" });
-            });
+            services.AddRazorPages();
             #region EventBus
 
             services.AddSingleton<IRabbitMQPersistantConnection>(sp =>
@@ -70,19 +55,10 @@ namespace Contactlist.Reporting
                 return new DefaultRabbitMQPersistantConnection(factory, retryCount, logger);
             });
 
-            services.AddSingleton<EventBusRabbitMQProducer>();
-
             #endregion
-            services.AddAutoMapper(typeof(Startup));
-            services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
-                builder.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials()
-                .WithOrigins("http://localhost:50691");
-               }));
-            services.AddSignalR();
-
+            services.AddSingleton<EventBusReportConsumer>();
+           
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,19 +67,25 @@ namespace Contactlist.Reporting
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contactlist.Reporting v1"));
             }
-            
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
+
+            app.UseStaticFiles();
+
             app.UseRouting();
+            
 
             app.UseAuthorization();
-            app.UseCors("CorsPolicy");
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<ReportHub>("/reporthub");
-                endpoints.MapControllers();
+               
+                endpoints.MapRazorPages();
             });
+            app.UseRabbitListener();
         }
     }
 }
