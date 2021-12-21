@@ -67,7 +67,7 @@ namespace Contactlist.Sourcing.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
-        public async Task<ActionResult> CompleteAuction([FromBody] string id)
+        public async Task<ActionResult> CompleteReport([FromBody] string id)
         {
             Report report = await _reportRepository.GetReport(id);
             if (report == null)
