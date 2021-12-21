@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
 using AutoMapper;
+using Contactlist.Reporting.Hubs;
 
 namespace Contactlist.Reporting
 {
@@ -73,6 +74,14 @@ namespace Contactlist.Reporting
 
             #endregion
             services.AddAutoMapper(typeof(Startup));
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+                .WithOrigins("http://localhost:50691");
+               }));
+            services.AddSignalR();
 
         }
 
@@ -89,9 +98,10 @@ namespace Contactlist.Reporting
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ReportHub>("/reporthub");
                 endpoints.MapControllers();
             });
         }

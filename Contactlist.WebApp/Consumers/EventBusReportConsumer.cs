@@ -17,14 +17,13 @@ namespace Contactlist.WebApp.Consumers
     public class EventBusReportConsumer
     {
         private readonly IRabbitMQPersistantConnection _persistentConnection;
-        private readonly IMediator _mediator;
+
         private readonly IMapper _mapper;
 
-        public EventBusReportConsumer(IRabbitMQPersistantConnection persistentConnection, IMediator mediator, IMapper mapper)
+        public EventBusReportConsumer(IRabbitMQPersistantConnection persistentConnection)
         {
             _persistentConnection = persistentConnection ?? throw new ArgumentNullException(nameof(persistentConnection));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+          
         }
 
         public void Consume()
@@ -51,7 +50,7 @@ namespace Contactlist.WebApp.Consumers
 
             if (e.RoutingKey == EventBusConstants.ReportCreateQueue)
             {
-                
+               
             }
         }
 

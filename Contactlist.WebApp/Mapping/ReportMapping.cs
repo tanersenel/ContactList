@@ -11,7 +11,7 @@ namespace Contactlist.WebApp.Mapping
     {
         public ReportMapping()
         {
-            CreateMap<ReportCreateEvents, ReportCreateCommand>().ReverseMap();
+            //CreateMap<ReportCreateEvents, ReportCreateCommand>().ReverseMap();
         }
     }
 }

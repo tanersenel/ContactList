@@ -1,5 +1,6 @@
 using Contactlist.WebApp.Consumers;
 using Contactlist.WebApp.Extensions;
+
 using EventBusRabbitMQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,6 +57,8 @@ namespace Contactlist.WebApp
 
             #endregion
             services.AddSingleton<EventBusReportConsumer>();
+           
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,11 +76,13 @@ namespace Contactlist.WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
+            
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+               
                 endpoints.MapRazorPages();
             });
             app.UseRabbitListener();
